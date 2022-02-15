@@ -1,0 +1,29 @@
+{
+  "name": "lofas-ndistudioclock",
+  "version": "1.0.0",
+  "api_version": "1.0.0",
+  "keywords": [
+    "Software",
+    "NDI",
+    "Studio Clock",
+    "Clock"
+  ],
+  "manufacturer": "Lofas AB",
+  "product": "NDI Studio Clock",
+  "shortname": "ndistudioclock",
+  "description": "Module to control Lofas NDI Studio Clock",
+  "homepage": "https://github.com/bitfocus/companion-module-lofas-ndistudioclock",
+  "bugs": {
+    "url": "https://github.com/bitfocus/companion-module-lofas-ndistudioclock/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitfocus/companion-module-lofas-ndistudioclock.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matteo Gheza <me@matteogheza.it>",
+  "license": "MIT"
+}
