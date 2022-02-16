@@ -66,7 +66,7 @@ class instance extends instance_skel {
 		this.system.emit('rest_poll_get', this.id, parseInt(this.pollingInterval), `http://${this.config.host}:${this.config.port}/api/getstates`, (err, pollInstance) => {
 			this.status(this.STATUS_ERROR, 'Polling Failed');
 		}, (error, response) => {
-			if(error) {
+			if(error || typeof response.data !== 'object') {
 				this.status(this.STATUS_ERROR, 'States Request Failed');
 			} else {
 				this.status(this.STATUS_OK);
@@ -185,8 +185,24 @@ class instance extends instance_skel {
 					this.parseStates(params.data.currentState);
 				}
 			});
-		} else {
-			//TODO: Implement set_countdown_text and set_countdown_time
+		} else if(action.action == 'set_countdown_text') {
+			this.system.emit('rest', `http://${this.config.host}:${this.config.port}/api/countdowntext`, action.options.text, (error, params) => {
+				if(error) {
+					this.status(this.STATE_ERROR, 'Request error');
+				} else {
+					this.status(this.STATE_OK);
+					this.parseStates(params.data.currentState);
+				}
+			});
+		} else if(action.action == 'set_countdown_time') {
+			this.system.emit('rest', `http://${this.config.host}:${this.config.port}/api/countdowntime`, action.options.time, (error, params) => {
+				if(error) {
+					this.status(this.STATE_ERROR, 'Request error');
+				} else {
+					this.status(this.STATE_OK);
+					this.parseStates(params.data.currentState);
+				}
+			});
 		}
 	}
 }
