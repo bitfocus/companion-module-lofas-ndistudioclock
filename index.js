@@ -15,7 +15,8 @@ class instance extends instance_skel {
 		super(system, id, config)
 		this.pollingInterval = 1000 // ms
 		this.actions() // export actions
-		this.startPolling();
+		this.feedbacks() // export feedbacks
+		this.startPolling()
 	}
 
 	updateConfig(config) {
@@ -73,6 +74,7 @@ class instance extends instance_skel {
 		});
 		this.setVariable('countdown_text', this.states.countdowntext);
 		this.setVariable('countdown_time', this.states.countdowntime);
+		this.checkFeedbacks('onair', 'enablecountdown', 'autoonair', '12hclock', 'transparent', 'showclockhands');
 	}
 
 	startPolling() {
@@ -216,6 +218,68 @@ class instance extends instance_skel {
 				}
 			});
 		}
+	}
+
+	feedbacks() {
+		const defaultStyle = {
+			color: this.rgb(0, 0, 0),
+			bgcolor: this.rgb(255, 0, 0)
+		}
+		const defaultOptions = [
+			{
+				type: 'dropdown',
+				label: 'Requested state',
+				id: 'state',
+				default: '1',
+				choices: [
+					{ id: 1, label: 'Enabled' },
+					{ id: 2, label: 'Disabled' }
+				]
+			}
+		]
+
+		this.setFeedbackDefinitions({
+			onair: {
+				label: 'ON AIR',
+				type: 'boolean',
+				style: defaultStyle,
+				options: defaultOptions
+			},
+			enablecountdown: {
+				label: 'Countdown enabled',
+				type: 'boolean',
+				style: defaultStyle,
+				options: defaultOptions
+			},
+			autoonair: {
+				label: 'Auto ON AIR enabled',
+				type: 'boolean',
+				style: defaultStyle,
+				options: defaultOptions
+			},
+			'12hclock': {
+				label: 'Displaying 12 hours clock',
+				type: 'boolean',
+				style: defaultStyle,
+				options: defaultOptions
+			},
+			transparent: {
+				label: 'Using transparent background',
+				type: 'boolean',
+				style: defaultStyle,
+				options: defaultOptions
+			},
+			showclockhands: {
+				label: 'Showing clock hands',
+				type: 'boolean',
+				style: defaultStyle,
+				options: defaultOptions
+			}
+		});
+	}
+
+	feedback(feedback) {
+        return (feedback.options.state === 1) === this.states[feedback.type];
 	}
 }
 exports = module.exports = instance
