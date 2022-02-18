@@ -27,6 +27,17 @@ class instance extends instance_skel {
 	init() {
 		this.status(this.STATE_OK)
 
+		this.setVariableDefinitions( [
+			{
+				label: 'Countdown Text',
+				name: 'countdown_text'
+			},
+			{
+				label: 'Countdown Time',
+				name: 'countdown_time'
+			}
+		] );
+
 		debug = this.debug
 		log = this.log
 	}
@@ -60,6 +71,8 @@ class instance extends instance_skel {
 		data.forEach((el) => {
 			this.states[el.id] = "state" in el ? el.state : el.text;
 		});
+		this.setVariable('countdown_text', this.states.countdowntext);
+		this.setVariable('countdown_time', this.states.countdowntime);
 	}
 
 	startPolling() {
@@ -97,8 +110,7 @@ class instance extends instance_skel {
 					{
 						type: 'textinput',
 						id: 'text',
-						label: 'Text',
-						width: 12,
+						label: 'Text'
 					}
 				]
 			},
@@ -108,8 +120,7 @@ class instance extends instance_skel {
 					{
 						type: 'textinput',
 						id: 'time',
-						label: 'Time',
-						width: 12,
+						label: 'Time (use format HH:MM:SS)'
 					}
 				]
 			},
