@@ -45,6 +45,7 @@ class instance extends instance_skel {
 				id: 'port',
 				label: 'Port',
 				width: 6,
+				default: 13344
 			}
 		]
 	}
