@@ -317,7 +317,7 @@ class instance extends instance_skel {
 					text: 'Enable ONAIR',
 					size: '14',
 					color: 16777215,
-					bgcolor: self.rgb(0,204,0)
+					bgcolor: this.rgb(0,204,0)
 				},
 				actions: [{
 					action: 'enable_onair'
@@ -331,7 +331,7 @@ class instance extends instance_skel {
 					text: 'Disable ONAIR',
 					size: '14',
 					color: 16777215,
-					bgcolor: self.rgb(255,0,0)
+					bgcolor: this.rgb(255,0,0)
 				},
 				actions: [{
 					action: 'disable_onair'
@@ -345,7 +345,7 @@ class instance extends instance_skel {
 					text: 'Toggle ONAIR',
 					size: '14',
 					color: 16777215,
-					bgcolor: self.rgb(0,0,0)
+					bgcolor: this.rgb(0,0,0)
 				},
 				actions: [{
 					action: 'toggle_onair'
@@ -359,7 +359,7 @@ class instance extends instance_skel {
 					text: 'Enable countdown',
 					size: '14',
 					color: 16777215,
-					bgcolor: self.rgb(0,204,0)
+					bgcolor: this.rgb(0,204,0)
 				},
 				actions: [{
 					action: 'enable_countdown'
@@ -373,7 +373,7 @@ class instance extends instance_skel {
 					text: 'Disable countdown',
 					size: '14',
 					color: 16777215,
-					bgcolor: self.rgb(255,0,0)
+					bgcolor: this.rgb(255,0,0)
 				},
 				actions: [{
 					action: 'disable_countdown'
@@ -387,7 +387,7 @@ class instance extends instance_skel {
 					text: 'Toggle countdown',
 					size: '14',
 					color: 16777215,
-					bgcolor: self.rgb(0,0,0)
+					bgcolor: this.rgb(0,0,0)
 				},
 				actions: [{
 					action: 'toggle_countdown'
