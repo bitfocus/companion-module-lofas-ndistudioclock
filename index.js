@@ -16,6 +16,7 @@ class instance extends instance_skel {
 		this.pollingInterval = 1000 // ms
 		this.actions() // export actions
 		this.feedbacks() // export feedbacks
+		this.presets() // export presets
 		this.startPolling()
 	}
 
@@ -304,6 +305,95 @@ class instance extends instance_skel {
 
 	feedback(feedback) {
 		return (feedback.options.state === 1) === this.states[feedback.type]
+	}
+
+	presets() {
+		this.setPresetDefinitions([
+			{
+				category: 'ONAIR',
+				label: 'enable onair',
+				bank: {
+					style: 'text',
+					text: 'Enable ONAIR',
+					size: '14',
+					color: 16777215,
+					bgcolor: self.rgb(0,204,0)
+				},
+				actions: [{
+					action: 'enable_onair'
+				}]
+			},
+			{
+				category: 'ONAIR',
+				label: 'disable onair',
+				bank: {
+					style: 'text',
+					text: 'Disable ONAIR',
+					size: '14',
+					color: 16777215,
+					bgcolor: self.rgb(255,0,0)
+				},
+				actions: [{
+					action: 'disable_onair'
+				}]
+			},
+			{
+				category: 'ONAIR',
+				label: 'toggle onair',
+				bank: {
+					style: 'text',
+					text: 'Toggle ONAIR',
+					size: '14',
+					color: 16777215,
+					bgcolor: self.rgb(0,0,0)
+				},
+				actions: [{
+					action: 'toggle_onair'
+				}]
+			},
+			{
+				category: 'countdown',
+				label: 'enable countdown',
+				bank: {
+					style: 'text',
+					text: 'Enable countdown',
+					size: '14',
+					color: 16777215,
+					bgcolor: self.rgb(0,204,0)
+				},
+				actions: [{
+					action: 'enable_countdown'
+				}]
+			},
+			{
+				category: 'countdown',
+				label: 'disable countdown',
+				bank: {
+					style: 'text',
+					text: 'Disable countdown',
+					size: '14',
+					color: 16777215,
+					bgcolor: self.rgb(255,0,0)
+				},
+				actions: [{
+					action: 'disable_countdown'
+				}]
+			},
+			{
+				category: 'countdown',
+				label: 'toggle countdown',
+				bank: {
+					style: 'text',
+					text: 'Toggle countdown',
+					size: '14',
+					color: 16777215,
+					bgcolor: self.rgb(0,0,0)
+				},
+				actions: [{
+					action: 'toggle_countdown'
+				}]
+			},
+		]);
 	}
 }
 exports = module.exports = instance
