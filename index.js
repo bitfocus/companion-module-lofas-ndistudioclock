@@ -14,6 +14,16 @@ class instance extends instance_skel {
 	constructor(system, id, config) {
 		super(system, id, config)
 		this.pollingInterval = 1000 // ms
+		this.states = {
+			"onair": false,
+			"enablecountdown": false,
+			"autoonair": false,
+			"countdowntext": false,
+			"countdowntime": false,
+			"12hclock": false,
+			"transparent": false,
+			"showclockhands": false
+		}
 		this.actions() // export actions
 		this.feedbacks() // export feedbacks
 		this.presets() // export presets
@@ -27,7 +37,7 @@ class instance extends instance_skel {
 	}
 
 	init() {
-		this.status(this.STATE_OK)
+		this.status(this.STATUS_ERROR, 'Unable to connect to NDI Studio Clock')
 
 		this.setVariableDefinitions([
 			{
@@ -79,6 +89,10 @@ class instance extends instance_skel {
 	}
 
 	startPolling() {
+		if(!this.config || !this.config.host || !this.config.port) {
+			this.status(this.STATUS_ERROR, 'Unable to connect to NDI Studio Clock')
+			return
+		}
 		this.system.emit('rest_poll_destroy', this.id)
 		this.system.emit(
 			'rest_poll_get',
@@ -315,7 +329,7 @@ class instance extends instance_skel {
 				bank: {
 					style: 'text',
 					text: 'Enable ONAIR',
-					size: '14',
+					size: '16',
 					color: 16777215,
 					bgcolor: this.rgb(0,204,0)
 				},
@@ -329,7 +343,7 @@ class instance extends instance_skel {
 				bank: {
 					style: 'text',
 					text: 'Disable ONAIR',
-					size: '14',
+					size: '16',
 					color: 16777215,
 					bgcolor: this.rgb(255,0,0)
 				},
@@ -343,7 +357,7 @@ class instance extends instance_skel {
 				bank: {
 					style: 'text',
 					text: 'Toggle ONAIR',
-					size: '14',
+					size: '16',
 					color: 16777215,
 					bgcolor: this.rgb(0,0,0)
 				},
@@ -357,7 +371,7 @@ class instance extends instance_skel {
 				bank: {
 					style: 'text',
 					text: 'Enable countdown',
-					size: '14',
+					size: '12',
 					color: 16777215,
 					bgcolor: this.rgb(0,204,0)
 				},
@@ -371,7 +385,7 @@ class instance extends instance_skel {
 				bank: {
 					style: 'text',
 					text: 'Disable countdown',
-					size: '14',
+					size: '12',
 					color: 16777215,
 					bgcolor: this.rgb(255,0,0)
 				},
@@ -385,7 +399,7 @@ class instance extends instance_skel {
 				bank: {
 					style: 'text',
 					text: 'Toggle countdown',
-					size: '14',
+					size: '12',
 					color: 16777215,
 					bgcolor: this.rgb(0,0,0)
 				},
