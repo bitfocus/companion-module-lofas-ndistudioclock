@@ -1,0 +1,21 @@
+{
+	"id": "lofas-ndistudioclock",
+	"name": "lofas-ndistudioclock",
+	"shortname": "ndistudioclock",
+	"description": "Lofas NDI Studio Clock",
+	"version": "0.1.0",
+	"license": "MIT",
+	"repository": "git+https://github.com/bitfocus/companion-module-lofas-ndistudioclock.git",
+	"bugs": "https://github.com/bitfocus/companion-module-lofas-ndistudioclock/issues",
+	"maintainers": [],
+	"legacyIds": [],
+	"runtime": {
+		"type": "node18",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../main.js"
+	},
+	"manufacturer": "",
+	"products": [],
+	"keywords": []
+}
