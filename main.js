@@ -17,20 +17,25 @@ class ModuleInstance extends InstanceBase {
 		this.pollTimer = null
 		this.pollingInterval = 1000
 
+		this.baseAxiosOptions = {
+			responseType: 'json',
+			timeout: 5000,
+			validateStatus: function (status) {
+				return status == 200
+			}
+		}
+
 		this.apiClient = axios.create({
 			baseURL: 'http://' + this.config.host + ':' + this.config.port + '/api/',
-			responseType: 'json',
-			validateStatus: function (status) {
-				return status != 200
-			},
+			...this.baseAxiosOptions
 		})
 
 		this.states = {
 			onair: false,
 			enablecountdown: false,
 			autoonair: false,
-			countdowntext: false,
-			countdowntime: false,
+			countdowntext: '',
+			countdowntime: '',
 			'12hclock': false,
 			transparent: false,
 			showclockhands: false,
@@ -41,6 +46,7 @@ class ModuleInstance extends InstanceBase {
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
 		this.updateVariableDefinitions() // export variable definitions
+		this.setVariableValues(this.states) // set initial variable values
 
 		this.setupPolling()
 	}
@@ -59,6 +65,11 @@ class ModuleInstance extends InstanceBase {
 		this.config = config
 
 		this.destroy()
+
+		this.apiClient = axios.create({
+			baseURL: 'http://' + this.config.host + ':' + this.config.port + '/api/',
+			...this.baseAxiosOptions
+		})
 		this.setupPolling()
 	}
 
@@ -104,14 +115,36 @@ class ModuleInstance extends InstanceBase {
 	}
 
 	setupPolling() {
-		clearInterval(this.pollTimer)
-		this.pollTimer = setInterval(this._restPolling.bind(this), this.config.pollingInterval)
-		this.log('info', 'Polling enabled at ' + this.config.pollingInterval + 'ms')
+		if (this.pollTimer != null) clearInterval(this.pollTimer)
+		if (!this.config.host || this.config.host == '') {
+			this.updateStatus(InstanceStatus.BadConfig, 'No target IP set')
+			return
+		}
+		if (this.config.port == '') {
+			this.updateStatus(InstanceStatus.BadConfig, 'No target port set')
+			return
+		}
+
+		//Test connection
+		this.updateStatus(InstanceStatus.Connecting, 'Waiting')
+		this.log('debug', 'URL: http://' + this.config.host + ':' + this.config.port + '/api/')
+		this.apiClient.get('getstates').then((response) => {
+			if (response.status == 200) {
+				this.updateStatus(InstanceStatus.Ok)
+				this.pollTimer = setInterval(() => {
+					this._restPolling()
+				}, this.config.pollingInterval)
+			} else {
+				this.updateStatus(InstanceStatus.ConnectionFailure, response.status + ' ' + response.statusText)
+			}
+		}).catch((error) => {
+			this.updateStatus(InstanceStatus.ConnectionFailure, error.message)
+		})
 	}
 
 	async _restPolling() {
 		try {
-			let response = await apiClient.get('states')
+			let response = await this.apiClient.get('getstates')
 			await this.processResponse(response)
 		} catch (error) {
 			await this.processError(error)
@@ -119,18 +152,24 @@ class ModuleInstance extends InstanceBase {
 	}
 
 	async processError(error) {
+		console.error("Processing error", error)
 		this.updateStatus(InstanceStatus.Error, error.message)
 	}
 
 	async processResponse(response) {
 		this.updateStatus(InstanceStatus.Ok)
-		let states = response.body
-		for (let key in states) {
-			if (states.hasOwnProperty(key)) {
-				this.states[key] = states[key]
+		if (!Array.isArray(response.data)) return
+		response.data.forEach((key) => {
+			if (this.states.hasOwnProperty(key.id)) {
+				if(key.hasOwnProperty('state')) {
+					this.states[key.id] = key.state
+				} else if(key.hasOwnProperty('text')) {
+					this.states[key.id] = key.text
+				}
 			}
-		}
-		console.log(this.states)
+		})
+		this.setVariableValues(this.states)
+		this.checkFeedbacks('OnAir', 'Countdown', 'AutoOnAir')
 	}
 }
 

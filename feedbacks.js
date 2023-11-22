@@ -2,32 +2,44 @@ const { combineRgb } = require('@companion-module/base')
 
 module.exports = async function (self) {
 	self.setFeedbackDefinitions({
-		ChannelState: {
-			name: 'Example Feedback',
+		OnAir: {
+			name: 'On Air status',
 			type: 'boolean',
-			label: 'Channel State',
+			label: 'On Air',
 			defaultStyle: {
 				bgcolor: combineRgb(255, 0, 0),
 				color: combineRgb(0, 0, 0),
 			},
-			options: [
-				{
-					id: 'num',
-					type: 'number',
-					label: 'Test',
-					default: 5,
-					min: 0,
-					max: 10,
-				},
-			],
+			options: [],
 			callback: (feedback) => {
-				console.log('Hello world!', feedback.options.num)
-				if (feedback.options.num > 5) {
-					return true
-				} else {
-					return false
-				}
+				return self.states.onair
 			},
 		},
+		Countdown: {
+			name: 'Countdown status',
+			type: 'boolean',
+			label: 'Countdown',
+			defaultStyle: {
+				bgcolor: combineRgb(255, 0, 0),
+				color: combineRgb(0, 0, 0),
+			},
+			options: [],
+			callback: (feedback) => {
+				return self.states.enablecountdown
+			},
+		},
+		AutoOnAir: {
+			name: 'Auto On Air status',
+			type: 'boolean',
+			label: 'Auto On Air',
+			defaultStyle: {
+				bgcolor: combineRgb(255, 0, 0),
+				color: combineRgb(0, 0, 0),
+			},
+			options: [],
+			callback: (feedback) => {
+				return self.states.autoonair
+			},
+		}
 	})
 }

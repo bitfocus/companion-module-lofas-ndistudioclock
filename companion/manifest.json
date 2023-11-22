@@ -15,7 +15,12 @@
 		"apiVersion": "0.0.0",
 		"entrypoint": "../main.js"
 	},
-	"manufacturer": "",
-	"products": [],
-	"keywords": []
+	"manufacturer": "Lofas AB",
+	"products": ["NDI Studio Clock"],
+	"keywords": [
+		"Software",
+		"NDI",
+		"Studio Clock",
+		"Clock"
+	]
 }
