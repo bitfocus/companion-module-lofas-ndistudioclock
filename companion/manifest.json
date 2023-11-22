@@ -17,10 +17,5 @@
 	},
 	"manufacturer": "Lofas AB",
 	"products": ["NDI Studio Clock"],
-	"keywords": [
-		"Software",
-		"NDI",
-		"Studio Clock",
-		"Clock"
-	]
+	"keywords": ["Software", "NDI", "Studio Clock", "Clock"]
 }

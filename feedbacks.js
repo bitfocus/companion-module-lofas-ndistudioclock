@@ -40,6 +40,6 @@ module.exports = async function (self) {
 			callback: (feedback) => {
 				return self.states.autoonair
 			},
-		}
+		},
 	})
 }

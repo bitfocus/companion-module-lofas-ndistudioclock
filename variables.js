@@ -7,6 +7,6 @@ module.exports = async function (self) {
 		{ variableId: 'countdowntime', name: 'Countdown Time' },
 		{ variableId: '12hclock', name: '12h Clock' },
 		{ variableId: 'transparent', name: 'Transparent' },
-		{ variableId: 'showclockhands', name: 'Show Clock Hands' }
+		{ variableId: 'showclockhands', name: 'Show Clock Hands' },
 	])
 }

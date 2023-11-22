@@ -22,12 +22,12 @@ class ModuleInstance extends InstanceBase {
 			timeout: 5000,
 			validateStatus: function (status) {
 				return status == 200
-			}
+			},
 		}
 
 		this.apiClient = axios.create({
 			baseURL: 'http://' + this.config.host + ':' + this.config.port + '/api/',
-			...this.baseAxiosOptions
+			...this.baseAxiosOptions,
 		})
 
 		this.states = {
@@ -68,7 +68,7 @@ class ModuleInstance extends InstanceBase {
 
 		this.apiClient = axios.create({
 			baseURL: 'http://' + this.config.host + ':' + this.config.port + '/api/',
-			...this.baseAxiosOptions
+			...this.baseAxiosOptions,
 		})
 		this.setupPolling()
 	}
@@ -128,18 +128,21 @@ class ModuleInstance extends InstanceBase {
 		//Test connection
 		this.updateStatus(InstanceStatus.Connecting, 'Waiting')
 		this.log('debug', 'URL: http://' + this.config.host + ':' + this.config.port + '/api/')
-		this.apiClient.get('getstates').then((response) => {
-			if (response.status == 200) {
-				this.updateStatus(InstanceStatus.Ok)
-				this.pollTimer = setInterval(() => {
-					this._restPolling()
-				}, this.config.pollingInterval)
-			} else {
-				this.updateStatus(InstanceStatus.ConnectionFailure, response.status + ' ' + response.statusText)
-			}
-		}).catch((error) => {
-			this.updateStatus(InstanceStatus.ConnectionFailure, error.message)
-		})
+		this.apiClient
+			.get('getstates')
+			.then((response) => {
+				if (response.status == 200) {
+					this.updateStatus(InstanceStatus.Ok)
+					this.pollTimer = setInterval(() => {
+						this._restPolling()
+					}, this.config.pollingInterval)
+				} else {
+					this.updateStatus(InstanceStatus.ConnectionFailure, response.status + ' ' + response.statusText)
+				}
+			})
+			.catch((error) => {
+				this.updateStatus(InstanceStatus.ConnectionFailure, error.message)
+			})
 	}
 
 	async _restPolling() {
@@ -152,7 +155,7 @@ class ModuleInstance extends InstanceBase {
 	}
 
 	async processError(error) {
-		console.error("Processing error", error)
+		console.error('Processing error', error)
 		this.updateStatus(InstanceStatus.Error, error.message)
 	}
 
@@ -161,9 +164,9 @@ class ModuleInstance extends InstanceBase {
 		if (!Array.isArray(response.data)) return
 		response.data.forEach((key) => {
 			if (this.states.hasOwnProperty(key.id)) {
-				if(key.hasOwnProperty('state')) {
+				if (key.hasOwnProperty('state')) {
 					this.states[key.id] = key.state
-				} else if(key.hasOwnProperty('text')) {
+				} else if (key.hasOwnProperty('text')) {
 					this.states[key.id] = key.text
 				}
 			}

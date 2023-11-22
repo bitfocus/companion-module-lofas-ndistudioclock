@@ -19,7 +19,7 @@ module.exports = function (self) {
 			name: 'Toggle On Air',
 			options: [],
 			callback: async () => {
-				await self.apiClient.get('onair/'+(self.states.onair ? 'false' : 'true'))
+				await self.apiClient.get('onair/' + (self.states.onair ? 'false' : 'true'))
 			},
 		},
 		//Enable Countdown
@@ -41,7 +41,7 @@ module.exports = function (self) {
 			name: 'Toggle Countdown',
 			options: [],
 			callback: async () => {
-				await self.apiClient.get('enablecountdown/'+(self.states.enablecountdown ? 'false' : 'true'))
+				await self.apiClient.get('enablecountdown/' + (self.states.enablecountdown ? 'false' : 'true'))
 			},
 		},
 		//Auto On Air
@@ -63,7 +63,7 @@ module.exports = function (self) {
 			name: 'Toggle Auto On Air',
 			options: [],
 			callback: async () => {
-				await self.apiClient.get('autoonair/'+(self.states.autoonair ? 'false' : 'true'))
+				await self.apiClient.get('autoonair/' + (self.states.autoonair ? 'false' : 'true'))
 			},
 		},
 		//12h Clock
@@ -85,7 +85,7 @@ module.exports = function (self) {
 			name: 'Toggle 12h Clock',
 			options: [],
 			callback: async () => {
-				await self.apiClient.get('12hclock/'+(self.states['12hclock'] ? 'false' : 'true'))
+				await self.apiClient.get('12hclock/' + (self.states['12hclock'] ? 'false' : 'true'))
 			},
 		},
 		//Transparent bkg
@@ -107,7 +107,7 @@ module.exports = function (self) {
 			name: 'Toggle Transparent Background',
 			options: [],
 			callback: async () => {
-				await self.apiClient.get('transparent/'+(self.states.transparent ? 'false' : 'true'))
+				await self.apiClient.get('transparent/' + (self.states.transparent ? 'false' : 'true'))
 			},
 		},
 		//Show Clock Hands
@@ -129,7 +129,7 @@ module.exports = function (self) {
 			name: 'Toggle Show Clock Hands',
 			options: [],
 			callback: async () => {
-				await self.apiClient.get('showclockhands/'+(self.states.showclockhands ? 'false' : 'true'))
+				await self.apiClient.get('showclockhands/' + (self.states.showclockhands ? 'false' : 'true'))
 			},
 		},
 		//Set Countdown Text
@@ -144,7 +144,7 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (event) => {
-				await self.apiClient.get('countdowntext/'+event.options.text)
+				await self.apiClient.get('countdowntext/' + event.options.text)
 			},
 		},
 		//Set Countdown Time
@@ -159,8 +159,8 @@ module.exports = function (self) {
 				},
 			],
 			callback: async (event) => {
-				await self.apiClient.get('countdowntime/'+event.options.time)
+				await self.apiClient.get('countdowntime/' + event.options.time)
 			},
-		}
+		},
 	})
 }
