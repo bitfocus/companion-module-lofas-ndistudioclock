@@ -12,7 +12,7 @@
 	},
 	"dependencies": {
 		"@companion-module/base": "~1.6.0",
-		"axios": "^1.6.2"
+		"axios": "^1.7.4"
 	},
 	"devDependencies": {
 		"@companion-module/tools": "^1.4.1"
