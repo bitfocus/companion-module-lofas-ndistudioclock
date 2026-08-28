@@ -15,7 +15,7 @@
 		"axios": "^1.18.0"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^1.5.2"
+		"@companion-module/tools": "^2.8.0"
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json"
 }
