@@ -3,7 +3,7 @@
 	"name": "lofas-ndistudioclock",
 	"shortname": "ndistudioclock",
 	"description": "Lofas NDI Studio Clock",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-lofas-ndistudioclock.git",
 	"bugs": "https://github.com/bitfocus/companion-module-lofas-ndistudioclock/issues",
